@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 const AddModal = ({ open, closeModal, getData }) => {
@@ -10,7 +11,6 @@ const AddModal = ({ open, closeModal, getData }) => {
         })
         const statusData = await response.json();
         setStatuses(statusData);
-        closeModal();
         getData();
     }
 
