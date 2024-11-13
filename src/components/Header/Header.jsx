@@ -1,8 +1,7 @@
-import styles from './Header.module.css'
 const Header = () => {
     return (
-        <div className={styles.container}>
-            Async Thunk
+        <div className="sticky top-0 flex items-center justify-center text-white text-xl px-12 py-5 bg-blue-600">
+            To-Do
         </div>
     )
 }
