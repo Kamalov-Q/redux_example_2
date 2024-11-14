@@ -1,22 +1,52 @@
-const DeleteModal = ({ open, closeModal }) => {
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react"
+import { useDispatch } from "react-redux";
+import { deleteTodo } from "../../store/features/todoSlice";
+
+const DeleteModal = ({ open, closeModal, id }) => {
+    console.log(id);
+
+    const dispatch = useDispatch();
+    const delTodo = () => {
+        dispatch(deleteTodo({ id: id }));
+        closeModal();
+    }
+
     return (
-        open ? <div
-            onClick={closeModal}
-            className="w-[100vw] h-[100vh] fixed z-50 top-0 left-0 bg-[#00000030] grid place-items-center"
-        >
-            <div
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-                className="bg-white lg:w-[550px] w-[500px] h-auto max-h-[90vh] overflow-y-auto no-scrollbar rounded-3xl px-6 py-5"
-            >
-                <div className="py-2 my-2 text-2xl">O`chirilsinmi ?</div>
-                <div className="flex gap-4">
-                    <button className="bg-red-600 border-none text-white px-4 py-2">Ha</button>
-                    <button className="bg-blue-400 border-none text-white px-4 py-2">Yo`q</button>
+        <Dialog open={open} onClose={closeModal} className="relative z-10">
+            <DialogBackdrop
+                transition
+                className="fixed inset-0 bg-gray-500/75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+            />
+
+            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <DialogPanel
+                        transition
+                        className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+                    >
+                        <div className="bg-white px-4 pt-5 sm:p-6 sm:pb-4">
+                            <div className="text-xl py-2">O`chirilsinmi ? </div>
+                        </div>
+                        <div className="bg-gray-50 px-4 pb-3 sm:flex sm:flex-row-reverse sm:px-6">
+                            <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto" onClick={delTodo}
+                            >
+                                Delete
+                            </button>
+                            <button
+                                type="button"
+                                data-autofocus
+                                onClick={closeModal}
+                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </DialogPanel>
                 </div>
             </div>
-        </div> : null
+        </Dialog>
     )
 }
 
